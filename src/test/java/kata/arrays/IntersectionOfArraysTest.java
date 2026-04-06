@@ -1,10 +1,13 @@
 package kata.arrays;
 
+import kata.utils.TestResultExtension;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 import java.util.Arrays;
 
 import static org.junit.jupiter.api.Assertions.*;
 
+@ExtendWith(TestResultExtension.class)
 class IntersectionOfArraysTest {
 
     IntersectionOfArrays solver = new IntersectionOfArrays();
