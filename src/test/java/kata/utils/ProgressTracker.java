@@ -4,6 +4,7 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
+import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.time.LocalDate;
 import java.util.Set;
@@ -20,10 +21,16 @@ public class ProgressTracker {
 
     public static void recordIfAllPassed() {
         String today = LocalDate.now().toString();
+        Path filePath = Paths.get(FILE_PATH);
+        Path parent = filePath.getParent();
 
         try {
-            if (Files.exists(Paths.get(FILE_PATH))) {
-                String content = new String(Files.readAllBytes(Paths.get(FILE_PATH)), StandardCharsets.UTF_8);
+            if (parent != null) {
+                Files.createDirectories(parent);
+            }
+
+            if (Files.exists(filePath)) {
+                String content = new String(Files.readAllBytes(filePath), StandardCharsets.UTF_8);
                 if (content.contains(today)) return;
             }
 

@@ -51,4 +51,45 @@ class FloodFillTest {
                 {0, 2, 2}
         }, solver.solve(image, 1, 1, 2));
     }
+
+    @Test
+    void testBoundaryStartCell() {
+        int[][] image = {
+                {1, 1, 0},
+                {1, 0, 0},
+                {1, 1, 1}
+        };
+        assertArrayEquals(new int[][]{
+                {9, 9, 0},
+                {9, 0, 0},
+                {9, 9, 9}
+        }, solver.solve(image, 0, 0, 9));
+    }
+
+    @Test
+    void testTrulyDisconnectedRegion() {
+        int[][] image = {
+                {1, 1, 0, 1},
+                {1, 0, 0, 0},
+                {1, 1, 1, 1}
+        };
+
+        assertArrayEquals(new int[][]{
+                {2, 2, 0, 1},
+                {2, 0, 0, 0},
+                {2, 2, 2, 2}
+        }, solver.solve(image, 0, 0, 2));
+    }
+
+    @Test
+    void testEntireGridFilled() {
+        int[][] image = {
+                {4, 4},
+                {4, 4}
+        };
+        assertArrayEquals(new int[][]{
+                {7, 7},
+                {7, 7}
+        }, solver.solve(image, 1, 1, 7));
+    }
 }

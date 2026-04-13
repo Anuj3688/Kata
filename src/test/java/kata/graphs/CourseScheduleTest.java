@@ -34,4 +34,34 @@ class CourseScheduleTest {
     void testTrickyCase() {
         assertTrue(solver.solve(4, new int[][]{{1, 0}, {2, 0}, {3, 1}, {3, 2}}));
     }
+
+    @Test
+    void testLongerCycle() {
+        assertFalse(solver.solve(3, new int[][]{{1, 0}, {2, 1}, {0, 2}}));
+    }
+
+    @Test
+    void testDisconnectedComponents() {
+        assertTrue(solver.solve(6, new int[][]{{1, 0}, {2, 1}, {4, 3}}));
+    }
+
+    @Test
+    void testSelfDependency() {
+        assertFalse(solver.solve(2, new int[][]{{1, 1}}));
+    }
+
+    @Test
+    void testIndependentCoursesWithOneChain() {
+        assertTrue(solver.solve(5, new int[][]{{2, 1}, {1, 0}}));
+    }
+
+    @Test
+    void testDiamondDependencyStillPossible() {
+        assertTrue(solver.solve(5, new int[][]{{2, 0}, {2, 1}, {3, 2}, {4, 2}}));
+    }
+
+    @Test
+    void testCycleInsideDisconnectedGraph() {
+        assertFalse(solver.solve(6, new int[][]{{1, 0}, {2, 1}, {0, 2}, {4, 3}}));
+    }
 }

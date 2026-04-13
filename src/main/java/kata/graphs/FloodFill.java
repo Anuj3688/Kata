@@ -1,21 +1,44 @@
 package kata.graphs;
 
-/**
- * Problem: Flood Fill
- *
- * You are given an image represented by an m x n grid of integers image,
- * where image[i][j] represents the pixel value of the image.
- *
- * You are also given three integers sr, sc, and color. Perform a flood fill
- * on the image starting from the pixel image[sr][sc].
- *
- * Example:
- * Input: image = [[1,1,1],[1,1,0],[1,0,1]], sr = 1, sc = 1, color = 2
- * Output: [[2,2,2],[2,2,0],[2,0,1]]
- */
 public class FloodFill {
+    int M;
+    int N;
+
+    public int[][] direct = new int[][]{
+            {0, 1}, {1, 0}, {-1, 0}, {0, -1}
+    };
 
     public int[][] solve(int[][] image, int sr, int sc, int color) {
-        return new int[][]{};
+
+        if (image == null || image.length == 0 || image[0].length == 0) {
+            return new int[][]{};
+        }
+
+        M = image.length;
+        N = image[0].length;
+
+        int originalColor = image[sr][sc];
+
+        // 🔥 Important edge case
+        if (originalColor == color) return image;
+
+        dfsTraversal(image, sr, sc, originalColor, color);
+
+        return image;
+    }
+
+    private void dfsTraversal(int[][] image, int x, int y, int originalColor, int color) {
+
+        // ✅ Single place for all checks
+        if (x < 0 || y < 0 || x >= M || y >= N || image[x][y] != originalColor) {
+            return;
+        }
+
+        // mark visited by coloring
+        image[x][y] = color;
+
+        for (int[] d : direct) {
+            dfsTraversal(image, x + d[0], y + d[1], originalColor, color);
+        }
     }
 }
